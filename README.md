@@ -20,6 +20,18 @@ http://codingneko.com/sensors/door/beta
 8. create a new door by going to http://yourserver.whatever/api.php?action=addDoor&password=yourSQLpassword&name=aNameForYourDoor
 9. if you're getting a JSON formatted response with an object containing a result property set to true, you're in business.
 
+## Sensor deployment
+1. Open the sketch in IOTSensorFirmware/ESP8266 with the Arduino IDE
+2. If you havent already, add the ESP8266 to the boards manager by clicking on "File" -> "Preferences" and on the settings tab, add "http://arduino.esp8266.com/versions/2.3.0/package_esp8266com_index.json" to the begining of the "Additional Boards Manager URLs text field" followed by a comma if there are any other links already in there.
+3. Go to "Tools" -> "Board" and select NODE MCU 1.0 (ESP-12E Module)
+4. Select the COM port corresponding to your ESP8266 under "Tools" -> "Port"
+5. Edit the "ssid" and "password" constants (line 4 and 5) with your WiFi credentials.
+6. Flash the firmware to the board.
+7. Solder a Magnetic Hall sensor to the D2 pin on your ESP8266 (and ground and 3.3V obviously)
+8. If you pull a magnet close to the hall sensor you should see the built-in LED blink "success" in morse.
+9. Stick the magnet to your door and the sensor to your door frame.
+
+
 ## Very basic state of development
 The API is currently in a very basic state of development, here are some TODOs:
 - implement a proper authentication method
