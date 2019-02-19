@@ -1,0 +1,28 @@
+.paramContainer{
+    background-color: #EFEFEF;
+    padding:10px 30px;
+    border-radius: 5px;
+    margin:4px;
+    margin-top:20px;
+}
+
+h5{
+    font-weight: bold;
+}
+
+.type{
+    font-size: 10px !important;
+    background-color: #BBB;
+    padding:5px;
+    border-radius: 3px;
+    margin-left:10px;
+    text-transform: uppercase;
+}
+
+.example{
+    background-color:#CCC;
+    border-radius: 3px;
+    display:inline-block;
+    padding:2px 7px;
+    overflow-wrap: break-word;
+}

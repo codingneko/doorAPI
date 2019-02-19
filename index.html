@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <title>API Documentation</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">DoorAPI</a>
+
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    GET Parameters
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#action">Action</a>
+                    <a class="dropdown-item" href="#count">Count</a>
+                    <a class="dropdown-item" href="#name">name</a>
+                    <a class="dropdown-item" href="#password">password</a>
+                    <a class="dropdown-item" href="#status">status</a>
+                    <a class="dropdown-item" href="#doorId">doorId</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="getparams">
+        <div id="action" class="paramContainer">
+            <h2 class="paramTitle">action<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies an action for the API, not used when querying, only when adding registries.</p>
+            <h4>Accepted values</h4>
+            String (one of the following):
+            <ul>
+                <li><b><a href="#add">add</a>:</b> adds a registry to a specified door</li>
+                <li><b><a href="#addDoor">addDoor</a>:</b> adds door</li>
+            </ul>
+            <p>
+                <h5 id="add">add</h5>
+                <p>Adds a registry to a specified door</p>
+                <b>Required acompanying parameters:</b>
+                <ul>
+                    <li><a href="#status">status</a></li>
+                    <li><a href="#doorId">doorId</a></li>
+                </ul>
+            </p>
+            <p>
+                <h5 id="addDoor">addDoor</h5>
+                <p>Adds a door to the database</p>
+                <b>Required acompanying parameters:</b>
+                <ul>
+                    <li><a href="#name">name</a></li>
+                    <li><a href="#password">password</a></li>
+                </ul>
+            </p>
+            <h5>Example:</h5>
+            add a new registry on door 1 <br/>
+            <p class="example">
+                api.php?action=add&status=false&doorId=1
+            </p>
+        </div>
+
+        <div id="count" class="paramContainer">
+            <h2 class="paramTitle">count<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies an amount of registries to return, used only when querying the database, this parameter requires no additional parameters.</p>
+            <h4>Accepted values:</h4>
+            <p>Integer</p>
+            <h5>Example:</h5>
+            get the latest 10 registries <br/>
+            <p class="example">
+                api.php?count=10
+            </p>
+        </div>
+
+        <div id="name" class="paramContainer">
+            <h2 class="paramTitle">name<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies the name for a door. This parameter is used in conjunction with the <a href="#addDoor">addDoor</a> option in the <a href="#action">action</a> parameter and the <a href="#password">password</a> parameter.</p>
+            <h4>Accepted values:</h4>
+            <p>String (max 30 characters)</p><br />
+            <h4>Required acompanying parameters:</h4>
+            <ul>
+                <li><a href="#action">action</a> with <a href="#addDoor">addDoor</a> value</li>
+                <li><a href="#password">password</a></li>
+            </ul>
+            <h5>Example:</h5>
+            adds a door with name "exampleDoor" <br />
+            <p class="example">
+                api.php?action=addDoor&password=ExamplePassword&name=exampleDoor
+            </p>
+        </div>
+
+        <div id="password" class="paramContainer">
+            <h2 class="paramTitle">password<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies the password to use when adding a door. This parameter is used in conjunction with the <a href="#addDoor">addDoor</a> option in the <a href="#action">action</a> parameter and the <a href="#name">name</a> parameter</p>
+            <h4>Accepted values:</h4>
+            <p>String</p><br />
+            <h4>Required acompanying parameters:</h4>
+            <ul>
+                <li><a href="#action">action</a> with <a href="#addDoor">addDoor</a> value</li>
+                <li><a href="#name">name</a></li>
+            </ul>
+            <h5>Example:</h5>
+            adds a door using password "ExamplePassword" <br />
+            <p class="example">
+                api.php?action=addDoor&password=ExamplePassword&name=exampleDoor
+            </p>
+        </div>
+
+        <div id="status" class="paramContainer">
+            <h2 class="paramTitle">status<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies the status of a door. This parameter is to be used in conjunction with the <a href="#add">add</a> option in the <a href="#action">action</a> parameter and the <a href="#doorId">doorId</a> parameter.</p>
+            <h4>Accepted values:</h4>
+            <p>Boolean (true or false)</p><br />
+            <b>Required acompanying parameters:</b>
+            <ul>
+                <li><a href="#action">action</a> with <a href="#add">add</a> value</li>
+                <li><a href="#doorId">doorId</a></li>
+            </ul>
+            <h5>Example:</h5>
+            adds a registry to door 1 with status true, which means it's open (or it should)<br />
+            <p class="example">
+                api.php?action=add&doorId=1&status=true
+            </p>
+        </div>
+
+        <div id="doorId" class="paramContainer">
+            <h2 class="paramTitle">doorId<span class="type">GET</span></h2>
+            <p class="paramDescription">Specifies the id of a door to add a registry to. This parameter is to be used in conjunction with the <a href="#add">add</a> option in the <a href="#action">action</a> parameter and the <a href="#status">status</a> parameter.</p>
+            <h4>Accepted values:</h4>
+            <p>Integer</p><br />
+            <b>Required acompanying parameters:</b>
+            <ul>
+                <li><a href="#action">action</a> with <a href="#add">add</a> value</li>
+                <li><a href="#status">status</a></li>
+            </ul>
+            <h5>Example:</h5>
+            adds a registry to a door with doorId 1<br />
+            <p class="example">
+                api.php?action=add&status=false&doorId=1
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
