@@ -9,9 +9,14 @@ const char* password = "yourwifipassword";
 bool door = true;
 
 void setup() {
+  //connect to wifi
   WiFi.begin(ssid, password);
+  
+  //set the hall sensor and builtin LED pins
   pinMode(HALL_SENSOR, INPUT);
   pinMode(BUILTIN_LED, OUTPUT);
+  
+  //dump information on the serial monitor while connecting to wifi
   Serial.begin(9600);
   delay(1000);
   Serial.println();
@@ -21,22 +26,26 @@ void setup() {
     Serial.print(".");
   }
   Serial.println("connected");
+  
+  //turn off the built-in LED
   digitalWrite(BUILTIN_LED, HIGH);
 }
 
 void loop() {
+  //wait for wifi connection
   if(WiFi.status() == WL_CONNECTED){
-    
+    //if the door's status has changed send the registry to the server
     if(digitalRead(HALL_SENSOR) != door){
+      //if sent successfully say "success" and if it failed, say "failed" both in morse and on serial monitor
       if(sendDoorInfo(digitalRead(HALL_SENSOR))){
-        ledMorse("... ..- -.-. . ... ...");
+        ledMorse("... ..- -.-. -.-. . ... ...");
         Serial.println("Success");
       }else{
         ledMorse(". .-. --- .-.");
         Serial.println("Failed");
       };
     }
-
+    //wait 2 and a half seconds to check the door status again
     delay(2500);
   }
 }
@@ -76,9 +85,10 @@ bool sendDoorInfo(bool doorStatus){
 
 void ledMorse(String text){
   int morseEntity = 100;
+  //for each character
   for(int i = 0; i < text.length(); i++){
     char current = text.charAt(i);
-
+    //check wether it's a space, a word space, a dit or a dah and blink acordingly
     switch(current) {
       case '-':
         digitalWrite(BUILTIN_LED, LOW);
@@ -97,10 +107,10 @@ void ledMorse(String text){
         delay(morseEntity*7);
         break;
     }
-
+    //wait a morse entity to being the next character
     delay(morseEntity);
   }
-
+  //turn off the LED (probably not necessary but just in case)
   digitalWrite(BUILTIN_LED, HIGH);
 }
 
