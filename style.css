@@ -26,3 +26,7 @@ h5{
     padding:2px 7px;
     overflow-wrap: break-word;
 }
+
+#badges{
+    margin: 10px 4px;
+}

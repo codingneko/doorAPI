@@ -8,20 +8,42 @@ require_once("model/Door.php");
 require_once("model/Registry.php");
 
 if(isset($_GET["action"])){
-    if($_GET["action"] == "addDoor" && !is_null($_GET["name"])){
-        if($_GET["password"] == $GLOBALS['password']){
-            $door = new Door("Cody's Door");
-            $door->commit();
-            echo '{"result": true}';
+    if($_GET["action"] == "addDoor"){
+        if(isset($_GET["name"])){
+            if(isset($_GET["password"])){
+                if($_GET["password"] == $GLOBALS['password']){
+                    $door = new Door("Cody's Door");
+                    $door->commit();
+                    echo '{"result": true}';
+                }else{
+                    echo '{"result": "wrong credentials"}';
+                }
+            }else{
+                echo '{"result": "password missing"}';
+            }
+        }else{
+            echo '{"result": "name missing"}';
         }
-    }else if($_GET["action"] == "add" && !is_null($_GET["status"]) && !is_null($_GET["doorId"])){
-        $registry = new Registry($_GET["status"], $_GET["doorId"]);
-        $registry->commit();
-        echo '{"result": true}';
+    }else if($_GET["action"] == "add"){
+        if(isset($_GET["status"])){
+            if(isset($_GET["doorId"])){
+                $registry = new Registry($_GET["status"], $_GET["doorId"]);
+                $registry->commit();
+                echo '{"result": true}';
+            }else{
+                echo '{"result": "doorId missing"}';
+            }
+        }else{
+            echo '{"result": "status missing"}';
+        }
+    }else{
+        echo '{"result": "unrecognized action"}';
     }
-}else if(!is_null($_GET["count"])){
+}else if(isset($_GET["count"])){
     $database = new DatabaseActions($GLOBALS['server'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database']);
     $registries = $database->getRegistries($_GET["count"]);
 
     echo json_encode($registries);
+}else{
+    echo '{"result": "action missing"}';
 }
